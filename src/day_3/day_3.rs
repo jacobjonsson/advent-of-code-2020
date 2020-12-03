@@ -1,6 +1,8 @@
+extern crate time;
 use std::fs::File;
 use std::io::BufRead;
 use std::io::BufReader;
+use time::Instant;
 
 struct Line {
     original_length: i32,
@@ -8,6 +10,7 @@ struct Line {
 }
 
 pub fn day3() {
+    let start = Instant::now();
     let lines = read_input();
 
     let slope_1 = traverse_map(1, 1, &lines);
@@ -25,6 +28,11 @@ pub fn day3() {
     println!(
         "Sum of these are: {}",
         slope_1 * slope_2 * slope_3 * slope_4 * slope_5
+    );
+
+    println!(
+        "Took {} seconds to complete",
+        start.elapsed().as_seconds_f32()
     );
 }
 
