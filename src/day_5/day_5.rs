@@ -72,15 +72,15 @@ fn get_column(column_indicators: &str) -> i32 {
     let mut lower_bound = 0;
     let mut upper_bound = 7;
 
-    for row_indicator in column_indicators.chars() {
+    for column_indicator in column_indicators.chars() {
         let diff: f64 = (upper_bound as f64 - lower_bound as f64) / 2 as f64;
 
-        if row_indicator == 'L' {
+        if column_indicator == 'L' {
             upper_bound = (upper_bound as f64 - diff).floor() as i32;
-        } else if row_indicator == 'R' {
+        } else if column_indicator == 'R' {
             lower_bound = (lower_bound as f64 + diff).ceil() as i32;
         } else {
-            panic!("{} is not a column indicator", row_indicator);
+            panic!("{} is not a column indicator", column_indicator);
         }
     }
 
