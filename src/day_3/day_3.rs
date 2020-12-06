@@ -11,10 +11,10 @@ pub fn day3() {
     let slope_4 = traverse_slope(7, 1, &lines);
     let slope_5 = traverse_slope(1, 2, &lines);
 
-    println!("[DAY 3] Result of part 1: {}", slope_2);
+    println!("[DAY 3] Result for part 1: {}", slope_2);
 
     println!(
-        "[DAY 3] Result of part 2: {}",
+        "[DAY 3] Result for part 2: {}",
         slope_1 * slope_2 * slope_3 * slope_4 * slope_5
     );
 }
