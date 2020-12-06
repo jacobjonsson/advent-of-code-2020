@@ -1,47 +1,32 @@
-extern crate time;
-use time::Instant;
-
 #[path = "../input_loader/input_loader.rs"]
 mod input_loader;
 
 pub fn day5() {
-    let start = Instant::now();
     let input = input_loader::read_input("src/day_5/input.txt");
+    let groups = input.trim_end().split("\n").collect::<Vec<&str>>();
 
-    let mut max_seat_id = 0;
-    let mut seat_ids: Vec<i32> = Vec::new();
+    let seat_ids = groups
+        .iter()
+        .map(|&x| get_seat_id(get_row(&x[0..7]), get_column(&x[7..10])))
+        .collect::<Vec<i32>>();
 
-    for row in input.trim_end().split("\n").collect::<Vec<&str>>().iter() {
-        let row_number = get_row(&row[0..7]);
-        let column_number = get_column(&row[7..10]);
-
-        let seat_id = get_seat_id(row_number, column_number);
-
-        seat_ids.push(seat_id);
-
-        if seat_id >= max_seat_id {
-            max_seat_id = seat_id;
-        }
-    }
-
-    seat_ids.sort();
+    let mut sorted = seat_ids.clone();
+    sorted.sort();
 
     let mut my_seat_id = 0;
-    for (i, s) in seat_ids.iter().enumerate() {
+    for (i, s) in sorted.iter().enumerate() {
         if i > 1 {
-            if seat_ids[i - 1] != s - 1 {
+            if sorted[i - 1] != s - 1 {
                 my_seat_id = s - 1;
             }
         }
     }
 
-    println!("Max seat id: {}", max_seat_id);
-    println!("My seat id: {}", my_seat_id);
-
-    println!(
-        "Took {} seconds to complete",
-        start.elapsed().as_seconds_f32()
-    );
+    match seat_ids.iter().max() {
+        Some(v) => println!("[DAY 5] Result for part 1: {}", v),
+        None => panic!("Failed to get max of seat_ids"),
+    };
+    println!("[DAY 5] Result for part 2: {}", my_seat_id);
 }
 
 fn get_row(rows_indicators: &str) -> i32 {

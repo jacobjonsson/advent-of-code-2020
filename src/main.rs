@@ -1,4 +1,6 @@
+extern crate time;
 use std::env;
+use time::Instant;
 
 #[path = "./day_1/day_1.rs"]
 mod day_1;
@@ -19,6 +21,8 @@ mod day_5;
 mod day_6;
 
 fn main() {
+    let start = Instant::now();
+
     let args: Vec<String> = env::args().collect();
 
     let day = &args[1];
@@ -30,6 +34,19 @@ fn main() {
         "4" => day_4::day4(),
         "5" => day_5::day5(),
         "6" => day_6::day6(),
+        "ALL" => {
+            day_1::day1();
+            day_2::day2();
+            day_3::day3();
+            day_4::day4();
+            day_5::day5();
+            day_6::day6();
+        }
         _ => panic!("Provided day does not exist"),
     };
+
+    println!(
+        "Program finished in: {} seconds",
+        start.elapsed().as_seconds_f64()
+    );
 }

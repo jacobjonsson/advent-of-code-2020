@@ -1,28 +1,15 @@
-extern crate time;
-use std::fs::File;
-use std::io::BufRead;
-use std::io::BufReader;
-use time::Instant;
+#[path = "../input_loader/input_loader.rs"]
+mod input_loader;
 
-pub fn day4() {
-    let start = Instant::now();
-    let lines = read_input();
+fn part_2(input: &str) -> i32 {
+    let parsed = input.replace("\n\n", "---").replace("\n", " ");
+    let groups = parse_groups(&parsed);
+    let filtered_groups = groups.iter().filter(|&x| contains_keys(x));
 
     let mut valid_lines = 0;
 
-    for line in lines.iter() {
+    for line in filtered_groups {
         let groups: Vec<&str> = line.split(" ").collect();
-
-        if !line.contains("byr:")
-            || !line.contains("iyr:")
-            || !line.contains("eyr:")
-            || !line.contains("hgt:")
-            || !line.contains("hcl:")
-            || !line.contains("ecl:")
-            || !line.contains("pid:")
-        {
-            continue;
-        }
 
         let mut valid = true;
         'inner: for group in groups.iter() {
@@ -142,37 +129,59 @@ pub fn day4() {
         }
     }
 
-    println!("Found {} valid passports", valid_lines);
-
-    println!(
-        "Took {} seconds to complete",
-        start.elapsed().as_seconds_f32()
-    );
+    return valid_lines;
 }
 
-fn read_input() -> Vec<String> {
-    let f = File::open("src/day_4/input.txt").unwrap();
-    let file = BufReader::new(&f);
+pub fn day4() {
+    let input = input_loader::read_input("src/day_4/input.txt");
+    let part_1_result = part_1(&input);
+    let part_2_result = part_2(&input);
 
-    let mut line_counter = 0;
-    let mut lines = Vec::new();
+    println!("[DAY 4] Result for part 1: {}", part_1_result);
+    println!("[DAY 4] Result for part 2: {}", part_2_result);
+}
 
-    lines.push("".to_string());
+fn contains_keys(line: &str) -> bool {
+    return line.contains("byr:")
+        && line.contains("iyr:")
+        && line.contains("eyr:")
+        && line.contains("hgt:")
+        && line.contains("hcl:")
+        && line.contains("ecl:")
+        && line.contains("pid:");
+}
 
-    for line in file.lines() {
-        let l = line.unwrap();
+fn parse_groups(input: &str) -> Vec<&str> {
+    return input.split("---").collect();
+}
 
-        if l.is_empty() {
-            line_counter += 1;
-            continue;
-        }
+fn part_1(input: &str) -> i32 {
+    let parsed = input.replace("\n\n", "---").replace("\n", " ");
+    return parse_groups(&parsed)
+        .iter()
+        .filter(|&x| contains_keys(x))
+        .count() as i32;
+}
 
-        if lines.len() <= line_counter {
-            lines.push("".to_string());
-        }
+#[cfg(test)]
+mod tests {
+    use super::*;
 
-        lines[line_counter] = format!("{} {}", lines[line_counter], l).trim().to_string();
+    #[test]
+    fn test_part_1() {
+        let input = "ecl:gry pid:860033327 eyr:2020 hcl:#fffffd
+byr:1937 iyr:2017 cid:147 hgt:183cm
+
+iyr:2013 ecl:amb cid:350 eyr:2023 pid:028048884
+hcl:#cfa07d byr:1929
+
+hcl:#ae17e1 iyr:2013
+eyr:2024
+ecl:brn pid:760753108 byr:1931
+hgt:179cm
+
+hcl:#cfa07d eyr:2025 pid:166559648
+iyr:2011 ecl:brn hgt:59in";
+        assert_eq!(2, part_1(&input))
     }
-
-    return lines;
 }
