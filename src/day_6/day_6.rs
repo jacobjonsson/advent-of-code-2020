@@ -1,21 +1,14 @@
 extern crate time;
 use std::collections::HashMap;
-use std::fs::File;
-use std::io::BufReader;
-use std::io::Read;
 use time::Instant;
 
-fn read_input() -> String {
-    let f = File::open("src/day_6/input.txt").unwrap();
-    let mut file = BufReader::new(&f);
-    let mut input = String::new();
-    file.read_to_string(&mut input).unwrap();
-    return input;
-}
+#[path = "../input_loader/input_loader.rs"]
+mod input_loader;
 
 pub fn day6() {
     let start = Instant::now();
-    let input = read_input();
+
+    let input = input_loader::read_input("src/day_6/input.txt");
 
     let part_1_result = part_1(&input);
     println!("Result for part 1: {}", part_1_result);

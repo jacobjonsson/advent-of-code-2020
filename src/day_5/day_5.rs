@@ -1,18 +1,17 @@
 extern crate time;
-use std::fs::File;
-use std::io::BufRead;
-use std::io::BufReader;
 use time::Instant;
+
+#[path = "../input_loader/input_loader.rs"]
+mod input_loader;
 
 pub fn day5() {
     let start = Instant::now();
-
-    let input = read_input();
+    let input = input_loader::read_input("src/day_5/input.txt");
 
     let mut max_seat_id = 0;
     let mut seat_ids: Vec<i32> = Vec::new();
 
-    for row in input.iter() {
+    for row in input.trim_end().split("\n").collect::<Vec<&str>>().iter() {
         let row_number = get_row(&row[0..7]);
         let column_number = get_column(&row[7..10]);
 
@@ -93,15 +92,4 @@ fn get_column(column_indicators: &str) -> i32 {
 
 fn get_seat_id(row: i32, column: i32) -> i32 {
     return row * 8 + column;
-}
-
-fn read_input() -> Vec<String> {
-    let f = File::open("src/day_5/input.txt").unwrap();
-    let file = BufReader::new(&f);
-    let mut rows = Vec::new();
-    for line in file.lines() {
-        let l = line.unwrap();
-        rows.push(l);
-    }
-    return rows;
 }
