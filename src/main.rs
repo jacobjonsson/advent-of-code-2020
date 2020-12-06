@@ -9,12 +9,16 @@
 // #[path = "./day_4/day_4.rs"]
 // mod day_4;
 
-#[path = "./day_5/day_5.rs"]
-mod day_5;
+// #[path = "./day_5/day_5.rs"]
+// mod day_5;
+
+#[path = "./day_6/day_6.rs"]
+mod day_6;
 
 fn main() {
     // day_1::day1();
     // day_2::day2();
     // day_4::day4();
-    day_5::day5();
+    // day_5::day5();
+    day_6::day6();
 }
