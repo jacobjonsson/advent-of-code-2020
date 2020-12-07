@@ -32,7 +32,7 @@ fn create_map(input: &str) -> HashMap<String, Bag> {
         let parts = line.trim_end().split("contain").collect::<Vec<&str>>();
         let bag_name = parts[0].trim();
         let children = parts[1].trim();
-        if children.trim().contains("no other bags") {
+        if children.contains("no other bags") {
             map.insert(
                 bag_name.replace("bags", "bag").replace(".", ""),
                 Bag {
@@ -79,12 +79,10 @@ fn can_hold_bag(map: &HashMap<String, Bag>, current: &str, bag: &str) -> bool {
         None => panic!("Failed to get {}", current),
     };
 
-    // Check if any of the children can hold it.
     if b.children.iter().any(|x| x.name == bag) {
         return true;
     }
 
-    // Recursively check the children of each child.
     return b.children.iter().any(|x| can_hold_bag(map, &x.name, bag));
 }
 
@@ -104,7 +102,6 @@ fn cost(map: &HashMap<String, Bag>, current: &str) -> i64 {
 
 fn part_1(input: &str, bag: &str) -> i64 {
     let map = create_map(input);
-
     return map
         .iter()
         .filter(|(_, b)| can_hold_bag(&map, &b.name, bag))
@@ -112,11 +109,7 @@ fn part_1(input: &str, bag: &str) -> i64 {
 }
 
 fn part_2(input: &str, bag: &str) -> i64 {
-    let map = create_map(input);
-
-    let total = cost(&map, bag);
-    println!("Jox: {:?}", total);
-    return total;
+    return cost(&create_map(input), bag);
 }
 
 #[cfg(test)]
