@@ -17,6 +17,8 @@ mod day_6;
 mod day_7;
 #[path = "./day_8/day_8.rs"]
 mod day_8;
+#[path = "./day_9/day_9.rs"]
+mod day_9;
 
 fn main() {
     let start = Instant::now();
@@ -34,6 +36,7 @@ fn main() {
         "6" => day_6::day6(),
         "7" => day_7::day7(),
         "8" => day_8::day8(),
+        "9" => day_9::day9(),
         "ALL" => {
             day_1::day1();
             day_2::day2();
@@ -43,6 +46,7 @@ fn main() {
             day_6::day6();
             day_7::day7();
             day_8::day8();
+            day_9::day9();
         }
         _ => panic!("Provided day does not exist"),
     };
