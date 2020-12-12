@@ -161,15 +161,15 @@ fn part_1(input: &str) -> i32 {
     for instruction in instructions {
         match instruction.action {
             Action::Forward => match current_direction {
-                Direction::North => x += instruction.value,
-                Direction::East => y += instruction.value,
-                Direction::South => x -= instruction.value,
-                Direction::West => y -= instruction.value,
+                Direction::North => y += instruction.value,
+                Direction::East => x += instruction.value,
+                Direction::South => y -= instruction.value,
+                Direction::West => x -= instruction.value,
             },
-            Action::West => x += instruction.value,
-            Action::East => x -= instruction.value,
             Action::North => y += instruction.value,
+            Action::East => x += instruction.value,
             Action::South => y -= instruction.value,
+            Action::West => x -= instruction.value,
             Action::Left => {
                 current_direction =
                     get_next_left_direction(current_direction, instruction.value / 90);
