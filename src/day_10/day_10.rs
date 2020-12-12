@@ -7,10 +7,10 @@ pub fn day10() {
     let input = input_loader::read_input("src/day_10/input.txt");
 
     let part_1_result = part_1(&input);
-    println!("[DAY 9] Result for part 1: {}", part_1_result);
+    println!("[DAY 10] Result for part 1: {}", part_1_result);
 
     let part_2_result = part_2(&input);
-    println!("[DAY 9] Result for part 2: {}", part_2_result);
+    println!("[DAY 10] Result for part 2: {}", part_2_result);
 }
 
 fn parse_numbers(input: &str) -> Vec<i64> {
