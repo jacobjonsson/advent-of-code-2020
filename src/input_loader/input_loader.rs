@@ -7,5 +7,5 @@ pub fn read_input(p: &str) -> String {
     let mut file = BufReader::new(&f);
     let mut input = String::new();
     file.read_to_string(&mut input).unwrap();
-    return input;
+    return input.trim_start().trim_end().to_string();
 }
