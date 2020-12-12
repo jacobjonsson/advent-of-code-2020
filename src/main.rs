@@ -7,6 +7,8 @@ mod day_1;
 mod day_10;
 #[path = "./day_11/day_11.rs"]
 mod day_11;
+#[path = "./day_12/day_12.rs"]
+mod day_12;
 #[path = "./day_2/day_2.rs"]
 mod day_2;
 #[path = "./day_3/day_3.rs"]
@@ -43,6 +45,7 @@ fn main() {
         "9" => day_9::day9(),
         "10" => day_10::day10(),
         "11" => day_11::day11(),
+        "12" => day_12::day12(),
         "ALL" => {
             day_1::day1();
             day_2::day2();
@@ -55,6 +58,7 @@ fn main() {
             day_9::day9();
             day_10::day10();
             day_11::day11();
+            day_12::day12();
         }
         _ => panic!("Provided day does not exist"),
     };
