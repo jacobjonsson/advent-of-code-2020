@@ -136,24 +136,13 @@ fn part_2(input: &str) -> i64 {
         }
     }
 
-    let mut rules_map: HashMap<&Rule, Vec<usize>> = HashMap::new();
-    for (p, rxs) in &positions {
-        for r in rxs {
-            if rules_map.contains_key(r) {
-                rules_map.get_mut(r).unwrap().push(*p);
-            } else {
-                rules_map.insert(r, vec![*p]);
-            }
-        }
-    }
-
     let mut new_positions = positions.clone();
     for _ in 0..valid_tickets.len() {
         let check = new_positions.clone();
         for (x, rxs) in &check {
             if rxs.len() == 1 {
                 // Remove it from other positions since it's only applicable to this position.
-                for (i, _) in &positions {
+                for (i, _) in &check {
                     if i != x {
                         let filtered = new_positions
                             .get(&i)
